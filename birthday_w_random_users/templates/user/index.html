@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <style>
+      table {
+      border-collapse: collapse;
+      }
+
+      table, td, th {
+      border: 2px solid black;
+      }
+
+      td.numbers {
+      text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="margin: 30px">
+      {% if user_list %}
+      <table>
+        <tr><th>Username</th><th>Birthday</th><th>Eligible</th><th>Random Number</th><th>BizzFuzz</th></tr>
+        {% for user in user_list %}
+        <tr>
+          <td>{{ user.get_username }}</td>
+          <td class="numbers">{{ user.birthday|date:"n/j/Y" }}</td>
+          {% if user.is_thirteen %}
+          <td>allowed</td>
+          {% else %}
+          <td>blocked</td>
+          {% endif %}
+          <td class="numbers">{{ user.random_number_field }}</td>
+          <td>{{ user.bizz_fuzz }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+      <p><a href="{% url 'br_users:add_user' %}">Add a new user.</a></p>
+    </div>
+  </body>
+</html>
