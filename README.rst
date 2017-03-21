@@ -15,11 +15,12 @@ Requires dateutil
 * python manage.py migrate
 * python manage.py runserver
 * navigate to 127.0.0.1:8000/birthday_users/
+
   * add user `birthday_users/add`
   * edit user `birthday_users/<user_id>/edit`
   * delete user `birthday_users/<user_id>/delete`
   * view specific user details `birthday_users/<user_id>`
-  * download csv `birthday_users/csv
+  * download csv `birthday_users/csv`
 
 
 Notes
