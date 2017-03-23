@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'birthday_w_random_users'
+    'birthday_w_random_number_ext'
 ]
 
 MIDDLEWARE_CLASSES = [

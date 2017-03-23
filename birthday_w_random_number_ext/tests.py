@@ -1,20 +1,21 @@
 from django.test import TestCase
 from datetime import datetime
 from django.core.urlresolvers import reverse
-from .models import User
+from .models import BirthdayWRandomNumberExt
 
 #
 # Model Tests
 #
 
-class UserTests(TestCase):
+
+class BirthdayWRandomNumberExtTests(TestCase):
 
     def test_must_have_birthday(self):
         '''Test that the birthday cannot be null.
 
         '''
         from django.db import IntegrityError
-        usr = User()
+        usr = BirthdayWRandomNumberExt()
         self.assertRaises(IntegrityError, usr.save)
 
     def test_is_thirteen(self):
@@ -23,10 +24,10 @@ class UserTests(TestCase):
         '''
         # Should be coded such that the values for 13 change over
         # time, but overkill for this.
-        usr = User(birthday=datetime.date(datetime(*(2000, 01, 01))))
+        usr = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2000, 01, 01))))
         usr.save()
         self.assertTrue(usr.is_thirteen())
-        usr = User(birthday=datetime.date(datetime(*(2020, 01, 01))))
+        usr = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2020, 01, 01))))
         usr.save()
         self.assertFalse(usr.is_thirteen())
 
@@ -35,7 +36,7 @@ class UserTests(TestCase):
         random_number_field as 0.
 
         '''
-        usr = User(birthday='2000-01-01')
+        usr = BirthdayWRandomNumberExt(birthday='2000-01-01')
         usr.save()
         self.failIfEqual(usr.random_number_field, 0)
 
@@ -56,10 +57,10 @@ class ViewTests(TestCase):
             response = self.client.get(reverse('br_users:%s' % endpoint))
             self.assertEqual(response.status_code, 200, 'For %s' % endpoint)
 
-        usr = User(birthday='2014-10-12')
+        usr = BirthdayWRandomNumberExt(birthday='2014-10-12')
         usr.save()
         for endpoint in ['user_info', 'edit_user', 'delete_user']:
-            print '\n\n'+reverse('br_users:%s' % endpoint, kwargs={'pk':1})
+            print '\n\n'+reverse('br_users:%s' % endpoint, kwargs={'pk': 1})
             response = self.client.get(reverse('br_users:%s' % endpoint, args=('1')))
             print endpoint
             self.assertEqual(response.status_code, 200)
