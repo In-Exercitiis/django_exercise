@@ -40,6 +40,25 @@ class BirthdayWRandomNumberExtTests(TestCase):
         usr.save()
         self.failIfEqual(usr.random_number_field, 0)
 
+    def test_bizz_fuzz(self):
+        '''Test bizz_fuzz returns expected values.
+
+        '''
+        usr = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2000, 01, 01))))
+        usr.save()
+        # Multiple of 3 and 5
+        usr.random_number_field = 15
+        self.assertEqual(usr.bizz_fuzz(), 'BizzFuzz')
+        # Multiple of 3
+        usr.random_number_field = 6
+        self.assertEqual(usr.bizz_fuzz(), 'Bizz')
+        # Multiple of 5
+        usr.random_number_field = 10
+        self.assertEqual(usr.bizz_fuzz(), 'Fuzz')
+        # Neither 3 or 5
+        usr.random_number_field = 1
+        self.assertEqual(usr.bizz_fuzz(), 1)
+
 
 #
 # View Tests
@@ -47,11 +66,10 @@ class BirthdayWRandomNumberExtTests(TestCase):
 
 class ViewTests(TestCase):
 
-    def test_404(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 404)
-
     def test_endpoint_200s(self):
+        '''Ensure that all endpoints return 200.
+
+        '''
         for endpoint in ['index', 'add_user', 'csv_data']:
             print '\n\n'+reverse('br_users:%s' % endpoint)
             response = self.client.get(reverse('br_users:%s' % endpoint))
