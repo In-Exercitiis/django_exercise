@@ -32,7 +32,8 @@ class BirthdayWRandomNumberExt(User):
             return False
 
     def save(self, *args, **kwargs):
-        self.username = 'username%s' % len(BirthdayWRandomNumberExt.objects.all())
+        super(BirthdayWRandomNumberExt, self).save(*args, **kwargs)
+        self.username = 'username%s' % self.id
         # Random number 1-100, 0 indicates not set
         if self.random_number_field == 0:
             self.random_number_field = choice(xrange(1, 101))

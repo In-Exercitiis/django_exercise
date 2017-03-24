@@ -1,7 +1,8 @@
-from django.test import TestCase
+from .models import BirthdayWRandomNumberExt
 from datetime import datetime
 from django.core.urlresolvers import reverse
-from .models import BirthdayWRandomNumberExt
+from django.db import IntegrityError
+from django.test import TestCase
 
 #
 # Model Tests
@@ -14,7 +15,6 @@ class BirthdayWRandomNumberExtTests(TestCase):
         '''Test that the birthday cannot be null.
 
         '''
-        from django.db import IntegrityError
         usr = BirthdayWRandomNumberExt()
         self.assertRaises(IntegrityError, usr.save)
 
@@ -59,6 +59,23 @@ class BirthdayWRandomNumberExtTests(TestCase):
         usr.random_number_field = 1
         self.assertEqual(usr.bizz_fuzz(), 1)
 
+    def test_username_uniqueness(self):
+        '''Test that usernames are always unique.
+
+        '''
+        usr1 = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2000, 01, 01))))
+        usr1.save()
+        usr2 = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2001, 01, 01))))
+        usr2.save()
+        usr3 = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2002, 01, 01))))
+        usr3.save()
+        usr2.delete()
+        usr4 = BirthdayWRandomNumberExt(birthday=datetime.date(datetime(*(2002, 01, 01))))
+        try:
+            usr4.save()
+            self.assertTrue(True, 'Username uniqueness enforced.')
+        except IntegrityError:
+            self.fail('Username not unique')
 
 #
 # View Tests
