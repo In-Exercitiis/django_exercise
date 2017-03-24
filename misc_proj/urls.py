@@ -16,5 +16,5 @@ Including another URLconf
 from django.conf.urls import include, url
 
 urlpatterns = [
-    url(r'^birthday_users/', include('birthday_w_random_number_ext.urls')),
+    url(r'^birthday_w_random_number/', include('birthday_w_random_number_ext.urls')),
 ]

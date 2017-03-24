@@ -1,6 +1,6 @@
 <html>
   <body>
-    <h1>{% if user %}Edit user{% else %}Create user{% endif%}</h1>
+    <h1>{% if user %}Edit user {{ user.username }}{% else %}Create user{% endif%}</h1>
     <div>
       <form method="POST" action="."> 
         {% csrf_token %}

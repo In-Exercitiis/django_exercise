@@ -1,10 +1,34 @@
-from django.views import generic
-from django.contrib.auth.models import User
+from .forms import BirthdayWRandomNumberExtForm
+from .models import BirthdayWRandomNumberExt
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
+from django.views import generic
 import csv
-from .models import BirthdayWRandomNumberExt
-from .forms import BirthdayWRandomNumberExtForm
+
+
+class AddView(generic.edit.CreateView):
+    model = BirthdayWRandomNumberExt
+    form_class = BirthdayWRandomNumberExtForm
+    template_name = 'user/edit.html'
+    success_url = reverse_lazy('br_users:index')
+
+
+class DeleteView(generic.edit.DeleteView):
+    model = BirthdayWRandomNumberExt
+    form_class = BirthdayWRandomNumberExtForm
+    template_name = 'user/delete.html'
+    success_url = reverse_lazy('br_users:index')
+
+
+class DetailView(generic.DetailView):
+    model = BirthdayWRandomNumberExt
+    template_name = 'user/detail.html'
+
+
+class EditView(generic.edit.UpdateView):
+    model = BirthdayWRandomNumberExt
+    form_class = BirthdayWRandomNumberExtForm
+    template_name = 'user/edit.html'
 
 
 class IndexView(generic.ListView):
@@ -13,31 +37,6 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return BirthdayWRandomNumberExt.objects.all()
-
-
-class DetailView(generic.DetailView):
-    model = BirthdayWRandomNumberExt
-    template_name = 'user/user_form.html'
-
-
-class AddView(generic.edit.CreateView):
-    model = BirthdayWRandomNumberExt
-    form_class = BirthdayWRandomNumberExtForm
-    template_name = 'user/user_edit.html'
-    success_url = reverse_lazy('br_users:index')
-
-
-class EditView(generic.edit.UpdateView):
-    model = BirthdayWRandomNumberExt
-    form_class = BirthdayWRandomNumberExtForm
-    template_name = 'user/user_edit.html'
-
-
-class DeleteView(generic.edit.DeleteView):
-    model = BirthdayWRandomNumberExt
-    form_class = BirthdayWRandomNumberExtForm
-    template_name = 'user/user_edit.html'
-    success_url = reverse_lazy('br_users:index')
 
 
 def csv_view(request):

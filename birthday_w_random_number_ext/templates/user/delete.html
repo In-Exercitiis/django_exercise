@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <h1>Delete user {{ user.username }}</h1>
+    <div>
+      <form method="POST" action=".">
+        Delete user {{ user.username }}?
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Confirm">
+      </form>
+    </div>
+  </body>
+</html>
