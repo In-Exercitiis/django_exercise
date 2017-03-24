@@ -24,6 +24,10 @@ Or use as an api
 * view specific user details `birthday_w_random_number/<user_id>`
 * download csv `birthday_w_random_number/csv`
 
+Live Example
+============
+
+http://lukepowers.pythonanywhere.com/birthday_w_random_number/
 
 Notes
 ======
